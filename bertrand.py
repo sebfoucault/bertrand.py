@@ -1,39 +1,5 @@
-import pprint
+import argparse
 from collections import deque
-
-class DequeEx:
-    
-    def __init__(self,smart):
-        self._values_keys = {};
-        self._deque = deque()
-    
-    def __len__(self):
-        return len(self._deque)
-    
-    def popleft(self):
-        return self._deque.popleft()
-        
-    def append(self, state):
-    
-        svalues = state.values[:]
-        svalues.sort()
-        svalues_keys = self._get_key(svalues)
-        
-        if (svalues_keys in self._values_keys):
-            pass
-        else: 
-            self._values_keys[svalues_keys] = True
-            self._deque.append(state)
-    
-    def extend(self, states):
-        for state in states:
-            self.append(state)
-        
-    def _get_key(self,list):
-        k = ""
-        for i in list:
-            k = k + ";" + str(i)
-        return k            
 
 class Problem:
     
@@ -171,7 +137,51 @@ class Solver:
         return newStates
 
 
-p1 = Problem( [1,4,6,10,25,75], 911 )
-solver = Solver(p1)
-solution  = solver.solve( {'optCommutative':True} )
-print(solution)
+class DequeEx:
+    
+    def __init__(self,smart):
+        self._values_keys = {};
+        self._deque = deque()
+    
+    def __len__(self):
+        return len(self._deque)
+    
+    def popleft(self):
+        return self._deque.popleft()
+        
+    def append(self, state):
+    
+        svalues = state.values[:]
+        svalues.sort()
+        svalues_keys = self._get_key(svalues)
+        
+        if (svalues_keys in self._values_keys):
+            pass
+        else: 
+            self._values_keys[svalues_keys] = True
+            self._deque.append(state)
+    
+    def extend(self, states):
+        for state in states:
+            self.append(state)
+        
+    def _get_key(self,list):
+        k = ""
+        for i in list:
+            k = k + ";" + str(i)
+        return k            
+
+if __name__ == "__main__":
+
+    parser = argparse.ArgumentParser(description='Process some integers.')    
+    parser.add_argument('-t','--target', metavar='T', type=int,
+                        help='The target number to be solved')
+    parser.add_argument('-v','--values', metavar='V', type=int, nargs='+',
+                        help='The initial numbers that can be used to solve the problem')
+
+    args = parser.parse_args()
+    
+    p1 = Problem( args.values, args .target )
+    solver = Solver(p1)
+    solution  = solver.solve( {'optCommutative':True} )
+    print(solution)
