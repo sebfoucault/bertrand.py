@@ -172,11 +172,11 @@ class DequeEx:
         return k            
 
 if __name__ == "__main__":
-
+    
     parser = argparse.ArgumentParser(description='Process some integers.')    
-    parser.add_argument('-t','--target', metavar='T', type=int,
+    parser.add_argument('-t','--target', metavar='T', type=int, required=True,
                         help='The target number to be solved')
-    parser.add_argument('-v','--values', metavar='V', type=int, nargs='+',
+    parser.add_argument('-v','--values', metavar='V', type=int, required=True, nargs='+',
                         help='The initial numbers that can be used to solve the problem')
 
     args = parser.parse_args()
